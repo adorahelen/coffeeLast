@@ -14,12 +14,16 @@ public class OrderItem {
     private Long orderItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)  // 외래 키 명시
     private Product product;
+  // @JoinColumn을 명시적으로 설정안하면, 이름을 이상하게 지음 ex: Product_Product_id
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "order_id", nullable = false)
     private Order order;
     // 이렇게 쓰면, 알아서 Order/Product 테이블에서 id를 가져와서 외래키로 삼는다
     // @JoinColumn (name = "order_id", nullable = false)
+    // 이름을 order_order_id 로 지워서 Drop table 하고 다시 생성함
 
 
     @Enumerated(EnumType.STRING) // 이넘형태를 칼럼으로, 오디널은 숫자로, 이건 밸류로 지정 하는 부분 이다.
