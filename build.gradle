@@ -28,6 +28,9 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    // 게터, 세터 쓰기 위한 룸북 추가
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 }
 
