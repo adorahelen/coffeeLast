@@ -1,5 +1,6 @@
 package edu.portfolio.coffeelast.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +14,13 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)  // 외래 키 명시
     private Product product;
   // @JoinColumn을 명시적으로 설정안하면, 이름을 이상하게 지음 ex: Product_Product_id
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "order_id", nullable = false)
     private Order order;
@@ -31,6 +34,11 @@ public class OrderItem {
 
     private int price;
     private int quantity;
+
+    // 이거 없었으면, order에 있는 메소드에서 추가가 안되었다.
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }
 // 1. @Column 은 필수가 아니다. 없어도 자동으로 칼럼을 지정함 (@는 상세 조건 지정 위해서)
 // 2. @JoinColumn을 명시하지 않고 다음과 같이 @ManyToOne을 사용하면,
