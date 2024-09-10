@@ -1,12 +1,15 @@
 package edu.portfolio.coffeelast.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Setter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +24,7 @@ public class Order {
     private OrderStatus orderStatus;
 
     // Order가 여러 개의 OrderItem을 가질 수 있으므로 OneToMany 관계 설정
+    @JsonIgnore
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
     // ### cascade = CascadeType.ALL: Order를 저장할 때, 연관된 OrderItem들도 함께 저장됩니다.
@@ -76,3 +80,25 @@ public class Order {
 // Order를 생성할 때, OrderItem도 함께 저장하려면
 //  CascadeType.ALL 또는 CascadeType.PERSIST를 사용해 OrderItem도 자동으로 저장되도록 설정할 수 있습니다.
 //  또한 Order 엔티티와 OrderItem 간의 양방향 관계가 잘 설정되어 있어야 합니다.
+
+
+/*
+* OrderItem 엔티티와 Order 엔티티간 연관관계가 있는데,
+*  controller에서  Member엔티티를 JSON으로 반환하는 과정에서 알수없는 에러가 발생했다.
+
+
+원인 -> 연관관계 매핑 OnetoMany <-> ManyToOne에서 발생
+Order엔티티에서 Fetch.Lazy를 적용해도 엔티티를
+* JSON으로 변경하는 중 serialize(직렬화) 과정을 거치는데,
+* 이때 OrderItem에 order가 있으니까 order를 참조하고,
+* order에 있는 OrderItem를 참조하면서 무한 재귀가 발생한다. => 나도 맥시멈 뭐시기 나옸음
+
+
+
+해결
+방법1. 참조하는 엔티티에서 재귀를 일으키는 필드에 @JsonIgnore를 붙여준다. -> 이걸로 해결
+
+방법2. RestController에서 엔티티를 바로 반환하지 않고, DTO를 사용한다. ->이미 적용되어있었음
+
+-해당 에러는 엔티티를 바로 반환하지 않고 DTO를 사용하는 이유이기도 함.
+* */
