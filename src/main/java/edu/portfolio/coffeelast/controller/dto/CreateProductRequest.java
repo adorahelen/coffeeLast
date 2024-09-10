@@ -1,7 +1,6 @@
-package edu.portfolio.coffeelast.controller;
+package edu.portfolio.coffeelast.controller.dto;
 
 import edu.portfolio.coffeelast.entity.Category;
-import lombok.Data;
 
 public record CreateProductRequest
         (String productName,

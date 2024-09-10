@@ -1,10 +1,10 @@
 package edu.portfolio.coffeelast.controller;
 
+import edu.portfolio.coffeelast.controller.dto.CreateProductRequest;
 import edu.portfolio.coffeelast.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ProductController {

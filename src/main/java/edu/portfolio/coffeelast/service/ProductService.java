@@ -17,6 +17,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public List<Product> getProductsByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    } // 뷰를 통해서 (리스트로 보기 위해서)
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     } // 뷰를 통해서 (리스트로 반환)
@@ -34,4 +38,9 @@ public class ProductService {
             // 컴파일러는 Product() 생성자를 사용할 수 없다고 경고를 내립니다.
     }
 
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + productId));
+    }
 }
+
