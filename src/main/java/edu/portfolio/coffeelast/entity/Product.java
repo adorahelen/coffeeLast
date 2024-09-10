@@ -1,5 +1,6 @@
 package edu.portfolio.coffeelast.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -33,6 +34,7 @@ public class Product {
 
     // 이건 칼럼으로 지정되지 않고, 연관관계를 나타내기 위한 필드이다. (칼럼 저장되면, 안댐, 리스트라 안댈꺼임)
     // Product가 여러 개의 OrderItem과 연결될 수 있으므로 OneToMany 관계 설정
+    @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
