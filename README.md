@@ -1,4 +1,6 @@
-# 화면구성
+# DTO를 사용하지 않았다 -> 직렬화처리를 자동으로 수행하다, 문제가 발생-> @Jsonignore 쓰게됨
+
+## 화면구성
 
 <img width="1392" alt="image" src="https://github.com/user-attachments/assets/ea7fb1b7-6d91-447e-ae20-0d15440575e8">
 <img width="1392" alt="image" src="https://github.com/user-attachments/assets/a42e9302-4c9d-48b3-ac3b-134e53e68ff8">
